@@ -5,7 +5,8 @@ data class Produto(
     val PRODUTO_ID: Int,
     val PRODUTO_NOME: String,
     val PRODUTO_DESC: String,
-    val PRODUTO_PRECO: Int,
-    val CATEGORIA_ID: Double,
-    val PRODUTO_ATIVO: Double
+    val PRODUTO_PRECO: String,
+    val PRODUTO_DESCONTO: String,
+    val CATEGORIA_ID: Int,
+    val PRODUTO_ATIVO: Int
 )
