@@ -14,6 +14,7 @@ class CustomAdapter(private val dataSet: List<Produto>) :
         val nome: TextView = view.findViewById(R.id.nomeProduto)
         val descricao: TextView = view.findViewById(R.id.descricaoProduto)
         val valor: TextView = view.findViewById(R.id.valorProduto)
+        val desconto: TextView = view.findViewById(R.id.descontoProduto)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -28,6 +29,7 @@ class CustomAdapter(private val dataSet: List<Produto>) :
         viewHolder.nome.text = produto.PRODUTO_NOME
         viewHolder.descricao.text = produto.PRODUTO_DESC
         viewHolder.valor.text = produto.PRODUTO_PRECO.toString()
+        viewHolder.desconto.text = produto.PRODUTO_DESCONTO
     }
 
     override fun getItemCount() = dataSet.size

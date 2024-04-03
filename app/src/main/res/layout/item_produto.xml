@@ -32,9 +32,5 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="77dp"
-        android:layout_height="72dp"
-        tools:layout_editor_absoluteX="9dp"
-        tools:layout_editor_absoluteY="1dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
