@@ -10,3 +10,4 @@ data class Produto(
     val CATEGORIA_ID: Int,
     val PRODUTO_ATIVO: Int
 )
+
