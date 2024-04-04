@@ -3,14 +3,16 @@ package com.example.delta
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
+import com.bumptech.glide.Glide
 
 class CustomAdapter(private val dataSet: List<Produto>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val imagem: ImageView = view.findViewById(R.id.imagem_produto)
         val nome: TextView = view.findViewById(R.id.nomeProduto)
         val descricao: TextView = view.findViewById(R.id.descricaoProduto)
         val valor: TextView = view.findViewById(R.id.valorProduto)
@@ -26,11 +28,19 @@ class CustomAdapter(private val dataSet: List<Produto>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val produto = dataSet[position]
-        viewHolder.nome.text = produto.PRODUTO_NOME
-        viewHolder.descricao.text = produto.PRODUTO_DESC
-        viewHolder.valor.text = produto.PRODUTO_PRECO.toString()
-        viewHolder.desconto.text = produto.PRODUTO_DESCONTO
+        viewHolder.nome.text = produto.produtoNome
+        viewHolder.descricao.text = produto.produtoDesc
+        viewHolder.valor.text = produto.produtoPreco.toString()
+        viewHolder.desconto.text = produto.produtoDesconto
+
+        Glide.with(viewHolder.itemView.context)
+            .load(produto.imagemUrl)
+            .placeholder(R.drawable.ic_launcher_background) // placeholder
+            .error(com.google.android.material.R.drawable.mtrl_ic_error) // indica erro
+            .into(viewHolder.imagem)
+
     }
+
 
     override fun getItemCount() = dataSet.size
 }
