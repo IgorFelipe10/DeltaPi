@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imagem_produto"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,6 +29,7 @@
         android:id="@+id/descricaoProduto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imagem_produto"
@@ -38,6 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imagem_produto"
         app:layout_constraintTop_toBottomOf="@id/descricaoProduto" />
@@ -47,8 +50,9 @@
         android:id="@+id/descontoProduto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/valorProduto"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/valorProduto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
