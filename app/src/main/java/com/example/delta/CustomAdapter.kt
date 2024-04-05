@@ -16,7 +16,6 @@ class CustomAdapter(private val dataSet: List<Produto>) :
         val nome: TextView = view.findViewById(R.id.nomeProduto)
         val descricao: TextView = view.findViewById(R.id.descricaoProduto)
         val valor: TextView = view.findViewById(R.id.valorProduto)
-        val desconto: TextView = view.findViewById(R.id.descontoProduto)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +30,6 @@ class CustomAdapter(private val dataSet: List<Produto>) :
         viewHolder.nome.text = produto.produtoNome
         viewHolder.descricao.text = produto.produtoDesc
         viewHolder.valor.text = produto.produtoPreco.toString()
-        viewHolder.desconto.text = produto.produtoDesconto
 
         Glide.with(viewHolder.itemView.context)
             .load(produto.imagemUrl)
