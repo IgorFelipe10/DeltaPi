@@ -1,14 +1,17 @@
-package com.example.delta
-
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.delta.Produto
+import com.example.delta.R
 
-class CustomAdapter(private val dataSet: List<Produto>) :
+class CustomAdapter(private val dataSet: List<Produto>, private val context: Context) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -16,6 +19,7 @@ class CustomAdapter(private val dataSet: List<Produto>) :
         val nome: TextView = view.findViewById(R.id.nomeProduto)
         val descricao: TextView = view.findViewById(R.id.descricaoProduto)
         val valor: TextView = view.findViewById(R.id.valorProduto)
+        val btnComprar: Button = view.findViewById(R.id.btnComprar)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -33,12 +37,16 @@ class CustomAdapter(private val dataSet: List<Produto>) :
 
         Glide.with(viewHolder.itemView.context)
             .load(produto.imagemUrl)
-            .placeholder(R.drawable.ic_launcher_background) // placeholder
-            .error(com.google.android.material.R.drawable.mtrl_ic_error) // indica erro
+            .placeholder(R.drawable.ic_launcher_background)
+            .error(com.google.android.material.R.drawable.mtrl_ic_error)
             .into(viewHolder.imagem)
 
+        viewHolder.btnComprar.setOnClickListener {
+            val intent = Intent(context, ProdutoDetalhes::class.java)
+            intent.putExtra("QUANTIDADE_DISPONIVEL", produto.quantidadeDisponivel)
+            context.startActivity(intent)
+        }
     }
-
 
     override fun getItemCount() = dataSet.size
 }
