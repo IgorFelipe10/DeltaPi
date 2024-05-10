@@ -1,5 +1,6 @@
 package com.example.delta
 
+import CustomAdapter
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -53,8 +54,8 @@ class MainActivity : AppCompatActivity() {
         apiService.getProdutos().enqueue(object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
                 if (response.isSuccessful) {
-                    val Produtos = response.body() ?: emptyList()
-                    adapter = CustomAdapter(Produtos)
+                    val produtos = response.body() ?: emptyList()
+                    adapter = CustomAdapter(produtos)
                     recyclerView.adapter = adapter
                 } else {
                     Log.e("API Error", "Response not successful. Code: ${response.code()}")
