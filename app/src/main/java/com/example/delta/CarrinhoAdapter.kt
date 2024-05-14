@@ -70,7 +70,7 @@ class CarrinhoAdapter(
     }
 
     private fun getRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl("https://de54397e-a23c-4def-9eb4-b07dde659faa-00-14c35j45l3isu.picard.repl.co/")
+        .baseUrl("https://cf2ed0d0-0fa4-4ea9-84dd-132be839176f-00-3l9qap6fxkhll.janeway.replit.dev/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
