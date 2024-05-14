@@ -47,7 +47,7 @@ class ProdutoDetalhes : AppCompatActivity() {
 
     private fun adicionarAoCarrinho(userId: Int, produtoId: Int, quantidade: Int) {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://cace88f8-32cd-4dfe-a27c-cd47f72eee6a-00-36qyzm7anwvng.kirk.replit.dev/")
+            .baseUrl("https://2a4bd039-d129-4ded-8bac-18a9e92ca2aa-00-17odvjhb69afa.worf.replit.dev/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
