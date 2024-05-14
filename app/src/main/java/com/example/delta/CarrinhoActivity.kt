@@ -13,7 +13,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class CartActivity : AppCompatActivity() {
+class CarrinhoActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var totalTextView: TextView
     private lateinit var goToPaymentButton: Button
@@ -44,7 +44,7 @@ class CartActivity : AppCompatActivity() {
 
     private fun fetchCartItems() {
         val retrofit = Retrofit.Builder()
-            .baseUrl("URL DE API PHP RETROFIT JA CONHECIDA")
+            .baseUrl("https://cace88f8-32cd-4dfe-a27c-cd47f72eee6a-00-36qyzm7anwvng.kirk.replit.dev/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -70,7 +70,8 @@ class CartActivity : AppCompatActivity() {
     }
 
     fun updateTotal() {
-        total = items.sumOf { it.produtoPreco * it.quantidadeDisponivel }
+        total = items.sumOf { it.produtoPreco.toDouble() * it.quantidadeDisponivel }
+
         runOnUiThread {
             totalTextView.text = "Total: R$${String.format("%.2f", total)}"
         }
