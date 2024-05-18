@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity() {
         apiService.getProdutos().enqueue(object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
                 if (response.isSuccessful) {
-                    val produtos = response.body() ?: emptyList()
-                    adapter = CustomAdapter(produtos)
+                    val produto = response.body() ?: emptyList()
+                    adapter = CustomAdapter(produto)
                     recyclerView.adapter = adapter
                 } else {
                     Log.e("API Error", "Response not successful. Code: ${response.code()}")
