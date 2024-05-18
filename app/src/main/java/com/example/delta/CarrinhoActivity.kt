@@ -1,5 +1,6 @@
 package com.example.delta
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -7,6 +8,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.delta.CarrinhoApiService
+import com.example.delta.PagamentoActivity
+import com.example.delta.Produto
+import com.example.delta.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +30,9 @@ class CarrinhoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_carrinho)
 
+        val sharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("userId", 0)
+
         recyclerView = findViewById(R.id.cartRecyclerView)
         totalTextView = findViewById(R.id.totalTextView)
         goToPaymentButton = findViewById(R.id.goToPaymentButton)
@@ -32,10 +40,12 @@ class CarrinhoActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         fetchCartItems()
 
+
         goToPaymentButton.setOnClickListener {
             val intent = Intent(this, PagamentoActivity::class.java).apply {
-                putExtra("TOTAL", total)
-                putExtra("USER", 271)
+                var value=updateTotal()
+                putExtra("TOTAL", total.toString())
+                putExtra("USER", userId)
                 putParcelableArrayListExtra("PRODUCT_LIST", ArrayList(items))
             }
             startActivity(intent)
@@ -49,7 +59,11 @@ class CarrinhoActivity : AppCompatActivity() {
             .build()
 
         val api = retrofit.create(CarrinhoApiService::class.java)
-        api.getCartItems(userId = 271).enqueue(object : Callback<List<Produto>> {
+
+        val sharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("userId", 0)
+
+        api.getCartItems(userId).enqueue(object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
                 if (response.isSuccessful) {
                     items = response.body()?.toMutableList() ?: mutableListOf()
@@ -59,7 +73,7 @@ class CarrinhoActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
-
+                // Tratamento de falhas
             }
         })
     }
@@ -70,8 +84,7 @@ class CarrinhoActivity : AppCompatActivity() {
     }
 
     fun updateTotal() {
-        total = items.sumOf { it.produtoPreco.toDouble() * it.quantidadeDisponivel }
-
+        total = items.sumOf { (it.produtoPreco?.toDouble() ?: 0.0) * it.quantidadeDisponivel.toDouble() }
         runOnUiThread {
             totalTextView.text = "Total: R$${String.format("%.2f", total)}"
         }
