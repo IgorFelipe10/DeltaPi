@@ -1,4 +1,5 @@
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -21,8 +22,8 @@ class ProdutoDetalhes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_produto_detalhes)
 
-        val nomeProduto = intent.getStringExtra("NOME_PRODUTO") ?: "Nome nÃ£o disponÃ­vel"
-        val descricaoProduto = intent.getStringExtra("DESCRICAO_PRODUTO") ?: "DescriÃ§Ã£o nÃ£o disponÃ­vel"
+        val nomeProduto = intent.getStringExtra("NOME_PRODUTO") ?: "Nome nÃƒÂ£o disponÃƒÂ­vel"
+        val descricaoProduto = intent.getStringExtra("DESCRICAO_PRODUTO") ?: "DescriÃƒÂ§ÃƒÂ£o nÃƒÂ£o disponÃƒÂ­vel"
         val produtoId = intent.getIntExtra("ID_PRODUTO", 0)
         val quantidadeDisponivel = intent.getIntExtra("QUANTIDADE_DISPONIVEL", 0)
 
@@ -32,12 +33,16 @@ class ProdutoDetalhes : AppCompatActivity() {
 
         val editTextQuantidade = findViewById<EditText>(R.id.editQuantidadeDesejada)
         val btnAdicionarCarrinho = findViewById<Button>(R.id.btnAdicionarAoCarrinho)
+        val btnCarrinho = findViewById<Button>(R.id.btnAdicionarAoCarrinho)
 
         val sharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putInt("userId", variavelComId)
-        editor.apply()
         val userId = sharedPreferences.getInt("userId", 0)
+
+        var intent2 = Intent(this@ProdutoDetalhes, CarrinhoActivity::class.java)
+        intent2.putExtra("userId", userId)
+        btnCarrinho.setOnClickListener {
+            startActivity(intent2)
+        }
 
         btnAdicionarCarrinho.setOnClickListener {
             val quantidadeDesejada = editTextQuantidade.text.toString().toIntOrNull() ?: 0
@@ -57,7 +62,7 @@ class ProdutoDetalhes : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(this@ProdutoDetalhes, response.body() ?: "Sucesso!", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this@ProdutoDetalhes, "Resposta nÃ£o bem-sucedida", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ProdutoDetalhes, "Resposta nÃƒÂ£o bem-sucedida", Toast.LENGTH_SHORT).show()
                 }
             }
 
