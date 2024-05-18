@@ -1,5 +1,4 @@
 package com.example.delta
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.delta.CarrinhoApiService
+import com.example.delta.Produto
+import com.example.delta.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +40,9 @@ class CarrinhoAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.productName.text = item.produtoNome
-        holder.productPrice.text = String.format("R$%.2f", item.produtoPreco.toDouble())
+        // CorreÃƒÂ§ÃƒÂ£o: Assegurando que o preÃƒÂ§o ÃƒÂ© tratado como um nÃƒÂºmero para formataÃƒÂ§ÃƒÂ£o
+        holder.productPrice.text = item.produtoPreco?.let { String.format("R$%.2f", it.toDouble()) }
+
         holder.productQuantity.text = "Qtd: ${item.quantidadeDisponivel}"
         Glide.with(context).load(item.imagemUrl).into(holder.productImage)
 
@@ -50,13 +54,17 @@ class CarrinhoAdapter(
     private fun removeItemFromCart(item: Produto, position: Int) {
         val retrofit = getRetrofit()
         val api = retrofit.create(CarrinhoApiService::class.java)
-        api.deleteCartItem(item.produtoId, userId = 271).enqueue(object : Callback<Void> {
+
+        val sharedPreferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("userId", 0)
+
+        api.deleteCartItem(item.produtoId, userId).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     items.removeAt(position)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, items.size)
-                    updateTotal()  // Chamada da funÃ§Ã£o para atualizar o total
+                    updateTotal()  // Chamada da funÃƒÂ§ÃƒÂ£o para atualizar o total
                     Toast.makeText(context, "Item deletado com sucesso", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "Falha ao deletar o item", Toast.LENGTH_SHORT).show()
@@ -76,3 +84,4 @@ class CarrinhoAdapter(
 
     override fun getItemCount() = items.size
 }
+
