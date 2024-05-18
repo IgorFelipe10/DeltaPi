@@ -1,4 +1,3 @@
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +10,14 @@ import com.bumptech.glide.Glide
 import com.example.delta.Produto
 import com.example.delta.R
 
-class CustomAdapter(private val dataSet: List<Produto>, private val context: Context) :
+class CustomAdapter(private val dataSet: List<Produto>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imagem: ImageView = view.findViewById(R.id.imagem_produto)
         val nome: TextView = view.findViewById(R.id.nomeProduto)
         val descricao: TextView = view.findViewById(R.id.descricaoProduto)
         val valor: TextView = view.findViewById(R.id.valorProduto)
+        val imagem: ImageView = view.findViewById(R.id.imagem_produto)
         val btnComprar: Button = view.findViewById(R.id.btnComprar)
     }
 
@@ -30,22 +29,28 @@ class CustomAdapter(private val dataSet: List<Produto>, private val context: Con
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+
         val produto = dataSet[position]
+
         viewHolder.nome.text = produto.produtoNome
         viewHolder.descricao.text = produto.produtoDesc
         viewHolder.valor.text = produto.produtoPreco.toString()
 
         Glide.with(viewHolder.itemView.context)
             .load(produto.imagemUrl)
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(com.google.android.material.R.drawable.mtrl_ic_error)
+            .placeholder(R.drawable.ic_launcher_background) // placeholder
+            .error(com.google.android.material.R.drawable.mtrl_ic_error) // indica erro
             .into(viewHolder.imagem)
 
         viewHolder.btnComprar.setOnClickListener {
-            val intent = Intent(context, ProdutoDetalhes::class.java)
+            val intent = Intent(viewHolder.itemView.context, ProdutoDetalhes::class.java)
+            intent.putExtra("ID_PRODUTO", produto.produtoId)
+            intent.putExtra("NOME_PRODUTO", produto.produtoNome)
+            intent.putExtra("DESCRICAO_PRODUTO", produto.produtoDesc)
             intent.putExtra("QUANTIDADE_DISPONIVEL", produto.quantidadeDisponivel)
-            context.startActivity(intent)
+            viewHolder.itemView.context.startActivity(intent)
         }
+
     }
 
     override fun getItemCount() = dataSet.size
