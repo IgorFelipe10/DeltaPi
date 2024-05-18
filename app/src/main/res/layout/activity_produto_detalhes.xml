@@ -60,7 +60,7 @@
         android:id="@+id/txtQuantidadeDisponivelLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantidade disponÃ­vel:"
+        android:text="Quantidade disponÃƒÂ­vel:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editQuantidadeDesejada" />
@@ -87,5 +87,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtQuantidadeDisponivel" />
 
+    <Button
+        android:id="@+id/btnCarrinho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carrinho"
+        app:layout_constraintStart_toStartOf="@+id/btnAdicionarAoCarrinho"
+        app:layout_constraintTop_toTopOf="@+id/txtNomeProduto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
