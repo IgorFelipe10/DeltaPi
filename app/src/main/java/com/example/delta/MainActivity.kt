@@ -1,6 +1,5 @@
 package com.example.delta
 
-import CustomAdapter
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+import com.example.delta.CustomAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity() {
         apiService.getProdutos().enqueue(object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
                 if (response.isSuccessful) {
-                    val produto = response.body() ?: emptyList()
-                    adapter = CustomAdapter(produto)
+                    val produtos = response.body() ?: emptyList()
+                    adapter = CustomAdapter(produtos)
                     recyclerView.adapter = adapter
                 } else {
                     Log.e("API Error", "Response not successful. Code: ${response.code()}")
