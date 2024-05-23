@@ -1,3 +1,6 @@
+package com.example.delta
+
+import ProdutoDetalhes
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +32,6 @@ class CustomAdapter(private val dataSet: List<Produto>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
         val produto = dataSet[position]
 
         viewHolder.nome.text = produto.produtoNome
@@ -50,7 +52,6 @@ class CustomAdapter(private val dataSet: List<Produto>) :
             intent.putExtra("QUANTIDADE_DISPONIVEL", produto.quantidadeDisponivel)
             viewHolder.itemView.context.startActivity(intent)
         }
-
     }
 
     override fun getItemCount() = dataSet.size
