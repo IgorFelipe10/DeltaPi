@@ -19,7 +19,7 @@
         android:id="@+id/totalTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total: R$ 0.00"
+        android:text="Valor Total: R$ 0.00"
         android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@+id/goToPaymentButton"
         app:layout_constraintLeft_toLeftOf="parent"
